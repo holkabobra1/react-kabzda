@@ -1,0 +1,10 @@
+.friendsItem img {
+   width: 40px;
+   height: 40px;
+   border-radius: 30px;
+}
+
+.friendsItem {
+   display: inline-block;
+   padding-right: 8px;
+}
