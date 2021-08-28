@@ -1,3 +1,6 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+
 let store = {
    _state: {
       profilePage: {
@@ -28,6 +31,7 @@ let store = {
    _callSubscriber() {
       console.log('State changed')
    },
+   
    getState() {
       return this._state
    },
@@ -35,33 +39,40 @@ let store = {
       this._callSubscriber = observer
    },
 
-   _addPost() {
-      let newPost = {
-         id: 4,
-         message: this._state.profilePage.newPostText,
-         likesCount: 0
-      }
-      this._state.profilePage.posts.push(newPost)
-      this._state.profilePage.newPostText = ''
-      this._callSubscriber(this._state)
-   },
-   _updateNewPostText(newText) {
-      this._state.profilePage.newPostText = newText
-      this._callSubscriber(this._state)
-   },
    dispatch(action) {   //action - это объект, например { type: 'ADD-POST' }
       // eslint-disable-next-line default-case
       switch (action.type) {
-         case 'ADD-POST': 
-            this._addPost()
+         case ADD_POST: 
+            let newPost = {
+               id: 4,
+               message: this._state.profilePage.newPostText,
+               likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(this._state)
             break;
 
-         case 'UPDATE-NEW-POST-TEXT': 
-            this._updateNewPostText(action.newText)
+         case UPDATE_NEW_POST_TEXT: 
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(this._state)
             break;
       }
    }
 }
+
+export const addPostActionCreator = () => (
+   {
+      type: ADD_POST
+   }
+)
+
+export const updateNewPostTextActionCreator = (text) => (
+   {
+      type: UPDATE_NEW_POST_TEXT, 
+      newText: text
+   }
+)
 
 window.store = store
 

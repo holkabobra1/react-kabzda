@@ -9,9 +9,11 @@ const Dialogs = (props) => {
    let messageElements = props.state.messages.map( message => <Message message={message.message}/>)
 
    const msgElement = React.createRef()
+
    const sendMsg = () => {
       let text = msgElement.current.value
       alert(text)
+      msgElement.current.value = ''
    }
  
    return (
